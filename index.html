@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Tab Opener with Warning</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #111;
+      color: #eee;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+    .container {
+      background: #1e1e1e;
+      padding: 20px 24px;
+      border-radius: 8px;
+      max-width: 480px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    }
+    h1 {
+      margin-top: 0;
+      text-align: center;
+    }
+    .warning {
+      background: #3b1a1a;
+      border-left: 4px solid #ff5555;
+      padding: 10px 12px;
+      margin-bottom: 16px;
+      font-size: 0.95rem;
+    }
+    label {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      margin: 10px 0 16px;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+    button {
+      width: 100%;
+      padding: 10px 14px;
+      border: none;
+      border-radius: 4px;
+      background: #3b82f6;
+      color: #fff;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    button:disabled {
+      background: #555;
+      cursor: not-allowed;
+    }
+    .status {
+      margin-top: 12px;
+      font-size: 0.9rem;
+      color: #aaa;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Tab Opener</h1>
+
+    <div class="warning">
+      <strong>Warning:</strong> This page will open a new browser tab every 9 seconds
+      after you start it. This can be annoying, may trigger popup blockers, and
+      should only be used on your own device and with your full consent.
+    </div>
+
+    <p style="font-size:0.9rem;">
+      By continuing, you agree:
+    </p>
+    <ul style="font-size:0.9rem; padding-left: 20px;">
+      <li>You are using this on a device you control.</li>
+      <li>You understand multiple tabs will open automatically.</li>
+      <li>You can stop it by closing this page or the new tabs.</li>
+    </ul>
+
+    <label>
+      <input type="checkbox" id="agreeCheckbox" />
+      <span>I have read and agree to the rules above.</span>
+    </label>
+
+    <button id="startButton" disabled>Start opening tabs</button>
+    <div class="status" id="statusText">
+      You must agree to the rules before starting.
+    </div>
+  </div>
+
+  <script>
+    const agreeCheckbox = document.getElementById('agreeCheckbox');
+    const startButton = document.getElementById('startButton');
+    const statusText = document.getElementById('statusText');
+
+    let intervalId = null;
+    let started = false;
+
+    agreeCheckbox.addEventListener('change', () => {
+      startButton.disabled = !agreeCheckbox.checked || started;
+      statusText.textContent = agreeCheckbox.checked
+        ? 'You can start when you are ready.'
+        : 'You must agree to the rules before starting.';
+    });
+
+    startButton.addEventListener('click', () => {
+      if (!agreeCheckbox.checked || started) return;
+
+      started = true;
+      startButton.disabled = true;
+      statusText.textContent =
+        'Tab opening started. A new tab will open every 9 seconds. Close this page to stop.';
+
+      // Change this URL to whatever you want to open:
+      const targetUrl = 'https://example.com';
+
+      // Open one immediately (still tied to the click event)
+      window.open(targetUrl, '_blank');
+
+      // Then every 9 seconds
+      intervalId = setInterval(() => {
+        // Most browsers will block this after a while; this is expected.
+        window.open(targetUrl, '_blank');
+      }, 9000);
+    });
+
+    // Optional: clear interval when user leaves the page
+    window.addEventListener('beforeunload', () => {
+      if (intervalId) clearInterval(intervalId);
+    });
+  </script>
+</body>
+</html>
