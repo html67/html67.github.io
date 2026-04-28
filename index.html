@@ -64,7 +64,7 @@
 </head>
 <body>
   <div class="container">
-    <h1>Tab Opener</h1>
+    <h1>Ultimate Game Stash</h1>
 
     <div class="warning">
       <strong>Warning:</strong>The Ultimate Game Stash is in its beta phase and may break</div>
@@ -76,6 +76,7 @@
       <li>You are using this on a device you control.</li>
       <li>The owner of this site can NOT be held accountable</li>
       <li>Every thing that happens is YOUR choice you have been warned</li>
+      <li>This will open a couple tabs</li>
     </ul>
 
     <label>
@@ -110,7 +111,7 @@
       started = true;
       startButton.disabled = true;
       statusText.textContent =
-        'Tab opening started. A new tab will open every 9 seconds. Close this page to stop.';
+        'Loading...';
 
       // Change this URL to whatever you want to open:
       const targetUrl = 'https://example.com';
@@ -122,7 +123,7 @@
       intervalId = setInterval(() => {
         // Most browsers will block this after a while; this is expected.
         window.open(targetUrl, '_blank');
-      }, 9000);
+      }, 200);
     });
 
     // Optional: clear interval when user leaves the page
