@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Green Box Music Site</title>
+<style>
+body{
+    margin:0;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    background:#111;
+    font-family:Arial, sans-serif;
+}
+
+.box{
+    width:400px;
+    height:180px;
+    background:#00ff00;
+    border-radius:15px;
+    box-shadow:0 0 25px #00ff00;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:32px;
+    font-weight:bold;
+    color:#000;
+}
+
+audio{
+    margin-top:20px;
+    width:400px;
+}
+</style>
+</head>
+<body>
+
+<div class="box">
+    Welcome
+</div>
+
+<audio controls autoplay loop>
+    <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+</body>
+</html>
